@@ -55,6 +55,8 @@ Malesmod <- fisher.test(table1)
 
 According to the Chi squared test above, it shows us that the p-value is very small, it is (2.2e-16). This indicates that we need to reject the null hypothesis and that there is a difference between the males the took the drug and the males that took the placebo.
 
+
+### Calculating Effectiveness 
 ```{r}
 MaleEstimate <- Malesmod$estimate
 Malelow <- Malesmod$conf.int[1]
@@ -74,10 +76,62 @@ options(digits = 1)
 The effectiveness of the covid91 vaccine for Males is `r MaleEffect`. The confidence interval for males is `r Maleloweffect` to `r Malehigheffect `
 
 
-
-
-
 # Females
+```{r}
+Females <- filter(Covid91, sex == "Woman")
+```
+
+```{r}
+barchartGC(~infected + treatment,data=Females)
+barchartGC(~infected + treatment,data=Females, type="percent")
+
+```
+
+From the two bar chart above, we can see that females that took the covid19 drug got more sick than the females that took the placebo. This indicates that the drug is not effective for the Females group.
+
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=Females)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The information above shows that the females that got sick, 58% of them had taken the vaccine, and that 42% of the females sick took the placebo. Based on the information that was given, we can see that the vaccine seems to be ineffective for the females, so the vaccine is not working as good as it should.
+
+## Inferential  
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+Femalesmod <- fisher.test(table1)
+```
+
+The Chi squared test above shows us that the p value is 6e-04. This indicates that the p value is small, so we reject the hypothesis. In this case it shows that the data is different in a negative way, as in the drug is not effective compared to the placebo.
+
+
+ 
+
+### Calculating Effectiveness  
+```{r}
+FemaleEstimate <- Femalesmod$estimate
+Femalelow <- Femalesmod$conf.int[1]
+Femalehigh <- Femalesmod$conf.int[2]
+
+Femalelowprob <-Femalelow / (1 + Femalelow)
+Femaleloweffect <- Femalelowprob * 100
+
+Femalehighprob <- Femalehigh / (1+ Femalehigh)
+Femalehigheffect <- Femalehighprob * 100
+
+Femaleprob <- FemaleEstimate / (1+ FemaleEstimate)
+FemaleEffect <- Femaleprob * 100
+options(digits = 1)
+```
+
+The effectiveness of the covid91 vaccine for Females is `r FemaleEffect`. The confidence interval for Females is `r Femaleloweffect` to `r Femalehigheffect `
+
 
 # Drug Users
 
