@@ -34,6 +34,17 @@ barchartGC(~infected + treatment,data=Males, type="percent")
 
 From the two bar charts above, We can see that the males who took the placebo got more sick than the males who took the Covid19 drug. This indicates that the drug is effective for the males group.
 
+### Numerical Summaries  
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=Males)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The information above shows that 33.11% of the sick males had the treatment, and that 66.89% of those males who got sick took the placebo. This is a two to one difference and this lets us know that the treatment is working.
+
+
 
 # Females
 
